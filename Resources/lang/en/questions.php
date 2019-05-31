@@ -17,6 +17,7 @@ return [
         'id' => 'Id',
         'title' => 'Title',
         'Categories'=> 'Categories',
+        'status'=>'Status'
     ],
     'form' => [
         'title' => 'Title',

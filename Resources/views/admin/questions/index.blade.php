@@ -44,7 +44,8 @@
                             <thead>
                             <tr>
                                 <th class="col-md-1">{{ trans('itest::questions.table.id') }}</th>
-                                <th class="col-md-4">{{ trans('itest::questions.table.title') }}</th>
+                                <th class="col-md-6">{{ trans('itest::questions.table.title') }}</th>
+                                <th class="col-md-2">{{ trans('itest::questions.table.status') }}</th>
                                 <th class="col-md-1">{{ trans('core::core.table.created at') }}</th>
                                 <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                             </tr>
@@ -61,6 +62,14 @@
                                         <td>
                                             <a href="{{ route('admin.itest.question.edit', [$question->id]) }}">
                                                 {{ $question->title }}
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <a href="{{  route('admin.itest.question.edit', [$question->id]) }}">
+                                            <span class="label {{ $question->present()->statusLabelClass}}">
+                                            {{ $question->present()->status}}
+                                    </span>
                                             </a>
                                         </td>
                                         <td>
@@ -85,6 +94,7 @@
                             <tr>
                                 <th>{{ trans('itest::questions.table.id') }}</th>
                                 <th>{{ trans('itest::questions.table.title') }}</th>
+                                <th>{{ trans('itest::questions.table.status') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th>{{ trans('core::core.table.actions') }}</th>
                             </tr>

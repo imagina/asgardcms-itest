@@ -32,6 +32,7 @@
                                 <th>{{ trans('itest::categories.table.id') }}</th>
                                 <th>{{ trans('itest::categories.table.title') }}</th>
                                 <th>{{ trans('itest::categories.table.slug') }}</th>
+                                <th>{{ trans('itest::categories.table.status') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                             </tr>
@@ -56,6 +57,13 @@
                                     </a>
                                 </td>
                                 <td>
+                                    <a href="{{  route('admin.itest.category.edit', [$category->id]) }}">
+                                            <span class="label {{ $category->present()->statusLabelClass}}">
+                                            {{ $category->present()->status}}
+                                    </span>
+                                    </a>
+                                </td>
+                                <td>
                                     <a href="{{ route('admin.itest.category.edit', [$category->id]) }}">
                                         {{ $category->created_at }}
                                     </a>
@@ -77,6 +85,7 @@
                                 <th>{{ trans('itest::categories.table.id') }}</th>
                                 <th>{{ trans('itest::categories.table.title') }}</th>
                                 <th>{{ trans('itest::categories.table.slug') }}</th>
+                                <th>{{ trans('itest::categories.table.status') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th>{{ trans('core::core.table.actions') }}</th>
                             </tr>

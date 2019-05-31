@@ -16,6 +16,7 @@ return [
     'table' => [
     ],
     'form' => [
+        'email'=>'E-Mail Notify'
     ],
     'messages' => [
         'New test available'=>'New test available'

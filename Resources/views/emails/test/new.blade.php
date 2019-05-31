@@ -22,7 +22,7 @@
 
         <div style="margin-bottom: 5px">
             <p>
-                su resultado fue del {{$result->value}}%
+                Su resultado fue del <strong>{{$result->value}}%</strong>
             </p>
             {!! $result->description!!}
         </div>

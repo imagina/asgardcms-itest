@@ -94,7 +94,7 @@
                 <div class="col-xs-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <label>{{trans('itest::questions.form.status')}}</label>
+                            <label>{{trans('iblog::common.status_text')}}</label>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool"
                                         data-widget="collapse"><i

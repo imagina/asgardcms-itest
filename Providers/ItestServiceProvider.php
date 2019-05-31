@@ -44,7 +44,8 @@ class ItestServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishConfig('itest', 'permissions');
-
+        $this->publishConfig('itest', 'config');
+        $this->publishConfig('itest', 'settings');
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 

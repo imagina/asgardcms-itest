@@ -1,5 +1,15 @@
 url: https://github.com/imagina/asgardcms-itest
 versions:
+  "1.0.1":
+    added:
+      - Settings Email notify
+      - Presenter Test for Category and Questions
+      - view email notify for Admin
+      - Image defaul Category
+    changed:
+      - View index of category and question
+      - ItestServiceProvider for add setting and cofig file
+      - Category and Question Entity for add pesenter Class
   "1.0.0":
     changed:
       - Initial Module Version

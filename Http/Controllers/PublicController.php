@@ -12,6 +12,7 @@ use Modules\Itest\Repositories\TestRepository;
 use Illuminate\Http\Request;
 use Route;
 use Illuminate\Support\Facades\Mail;
+use Modules\Setting\Contracts\Setting;
 
 class PublicController extends BasePublicController
 {
@@ -22,14 +23,16 @@ class PublicController extends BasePublicController
     public $test;
 
     public $result;
+    private $setting;
 
-    public function __construct(CategoryRepository $category, TestRepository $test, ResultRepository $result)
+    public function __construct(CategoryRepository $category, TestRepository $test, ResultRepository $result, Setting $setting)
     {
         parent::__construct();
 
         $this->category = $category;
         $this->test = $test;
         $this->result=$result;
+        $this->setting = $setting;
 
     }
 
@@ -67,9 +70,11 @@ class PublicController extends BasePublicController
         $avg=$tests->avg('value');
         $value=($avg*100)/5;
         $result= $this->result->whereValue($value);
-        $subject = trans("itest::test.messages.New test available");
+        $subject = trans("itest::tests.messages.New test available"). ' - '.$this->setting->get('core::site-name');
         $view = "itest::emails.test.new";
-        Mail::to($email)->send(new SendTest($result,$view,$subject));
+        $notify = "itest::emails.test.notify-test";
+        Mail::to($email)->send(new SendTest($email,$result,$view,$subject));
+        Mail::to($this->setting->get('itest::notify-email'))->send(new SendTest($email,$result,$notify,$subject));
         return redirect()->route('itest.answer',[$category->slug])
             ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('itest::results.title.results')]));
 

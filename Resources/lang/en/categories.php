@@ -16,7 +16,8 @@ return [
     'table' => [
         'id' => 'Id',
         'title' => 'Title',
-        'slug' => 'Slug'
+        'slug' => 'Slug',
+        'status'=>'Status'
 
     ],
     'form' => [
