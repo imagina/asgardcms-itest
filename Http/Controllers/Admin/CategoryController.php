@@ -4,12 +4,12 @@ namespace Modules\Itest\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 use Modules\Itest\Entities\Category;
 use Modules\Itest\Entities\Status;
 use Modules\Itest\Http\Requests\CreateCategoryRequest;
 use Modules\Itest\Http\Requests\UpdateCategoryRequest;
 use Modules\Itest\Repositories\CategoryRepository;
-use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 
 class CategoryController extends AdminBaseController
 {
@@ -32,11 +32,11 @@ class CategoryController extends AdminBaseController
      *
      * @return Response
      */
-    public function index()
+    public function index($quiz)
     {
-        $categories = $this->category->all();
+        $categories = $this->category->whereQuiz($quiz->id);
 
-        return view('itest::admin.categories.index', compact('categories'));
+        return view('itest::admin.categories.index', compact('categories', 'quiz'));
     }
 
     /**
@@ -44,10 +44,10 @@ class CategoryController extends AdminBaseController
      *
      * @return Response
      */
-    public function create()
+    public function create($quiz)
     {
         $status = $this->status->lists();
-        return view('itest::admin.categories.create', compact('status'));
+        return view('itest::admin.categories.create', compact('status', 'quiz'));
     }
 
     /**
@@ -56,11 +56,12 @@ class CategoryController extends AdminBaseController
      * @param  CreateCategoryRequest $request
      * @return Response
      */
-    public function store(CreateCategoryRequest $request)
+    public function store($quiz, CreateCategoryRequest $request)
     {
+
         $this->category->create($request->all());
 
-        return redirect()->route('admin.itest.category.index')
+        return redirect()->route('admin.itest.category.index', [$quiz->id])
             ->withSuccess(trans('core::core.messages.resource created', ['name' => trans('itest::categories.title.categories')]));
     }
 
@@ -70,10 +71,10 @@ class CategoryController extends AdminBaseController
      * @param  Category $category
      * @return Response
      */
-    public function edit(Category $category)
+    public function edit($quiz, Category $category)
     {
         $status = $this->status->lists();
-        return view('itest::admin.categories.edit', compact('category','status'));
+        return view('itest::admin.categories.edit', compact('category', 'status', 'quiz'));
     }
 
     /**
@@ -83,11 +84,11 @@ class CategoryController extends AdminBaseController
      * @param  UpdateCategoryRequest $request
      * @return Response
      */
-    public function update(Category $category, UpdateCategoryRequest $request)
+    public function update($quiz, Category $category, UpdateCategoryRequest $request)
     {
         $this->category->update($category, $request->all());
 
-        return redirect()->route('admin.itest.category.index')
+        return redirect()->route('admin.itest.category.index', [$quiz->id])
             ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('itest::categories.title.categories')]));
     }
 
@@ -97,11 +98,11 @@ class CategoryController extends AdminBaseController
      * @param  Category $category
      * @return Response
      */
-    public function destroy(Category $category)
+    public function destroy($quiz, Category $category)
     {
         $this->category->destroy($category);
 
-        return redirect()->route('admin.itest.category.index')
+        return redirect()->route('admin.itest.category.index'[$quiz->id])
             ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('itest::categories.title.categories')]));
     }
 }

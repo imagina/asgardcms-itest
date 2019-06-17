@@ -33,7 +33,10 @@ class ItestServiceProvider extends ServiceProvider
             $event->load('questions', array_dot(trans('itest::questions')));
             $event->load('results', array_dot(trans('itest::results')));
             $event->load('tests', array_dot(trans('itest::tests')));
+            $event->load('quizzes', array_dot(trans('itest::quizzes')));
             // append translations
+
+
 
 
 
@@ -109,7 +112,22 @@ class ItestServiceProvider extends ServiceProvider
                 return new \Modules\Itest\Repositories\Cache\CacheTestDecorator($repository);
             }
         );
+     
+        $this->app->bind(
+            'Modules\Itest\Repositories\QuizRepository',
+            function () {
+                $repository = new \Modules\Itest\Repositories\Eloquent\EloquentQuizRepository(new \Modules\Itest\Entities\Quiz());
+
+                if (! config('app.cache')) {
+                    return $repository;
+                }
+
+                return new \Modules\Itest\Repositories\Cache\CacheQuizDecorator($repository);
+            }
+        );
 // add bindings
+
+
 
 
 

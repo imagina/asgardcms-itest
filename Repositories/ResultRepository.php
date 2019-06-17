@@ -33,6 +33,6 @@ interface ResultRepository extends BaseRepository
      * @param $value
      * @return mixed
      */
-    public function whereValue($value);
+    public function whereValue($id,$value);
 
 }

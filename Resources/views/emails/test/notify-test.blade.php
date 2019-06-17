@@ -17,19 +17,32 @@
         {{-- ***** Order Content  ***** --}}
         <div id="contend-mail" class="p-3">
             <h3 class="text-center text-uppercase">
-                {{trans('itest::tests.messages.New test available')}}
+                {{trans('itest::tests.messages.New test available')}} - {{$quiz->title}}
             </h3>
 
             <div style="margin-bottom: 5px">
                 <p>
-                   Se a realizado un nuevo test en su sitio web @setting('core::site-name')
+                    Se a realizado una nueva prueba en su sitio web @setting('core::site-name')
                 </p>
                 <p>
                     El correo registrado fue: {{$user}}
                 </p>
-                <p>
-                   El resultado fue del <strong>{{$result->value}}%</strong>
-                </p>
+
+                @foreach($result as $item)
+                    @if(isset($item->result)&& !empty($item->result))
+                        <div style="margin-bottom: 5px">
+                            <h3 class="text-center text-uppercase">
+                                {{$item->category}}
+                            </h3>
+
+                            <p>
+                                El resultado fue del <strong>{{(int)$item->result->value??0}}%</strong>
+                            </p>
+
+                        </div>
+                    @endif
+                @endforeach
+
             </div>
         </div>
 

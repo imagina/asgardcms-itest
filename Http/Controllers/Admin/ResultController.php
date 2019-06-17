@@ -32,12 +32,11 @@ class ResultController extends AdminBaseController
      *
      * @return Response
      */
-    public function index($category)
+    public function index($quiz, $category)
     {
 
         $results = $this->result->whereCategory($category->id);
-
-        return view('itest::admin.results.index', compact('results', 'category'));
+        return view('itest::admin.results.index', compact('results', 'category','quiz'));
     }
 
     /**
@@ -45,10 +44,10 @@ class ResultController extends AdminBaseController
      *
      * @return Response
      */
-    public function create($category)
+    public function create($quiz, $category)
     {
 
-        return view('itest::admin.results.create', compact('category'));
+        return view('itest::admin.results.create', compact('category','quiz'));
     }
 
     /**
@@ -57,14 +56,14 @@ class ResultController extends AdminBaseController
      * @param  CreateResultRequest $request
      * @return Response
      */
-    public function store($category, CreateResultRequest $request)
+    public function store($quiz, $category, CreateResultRequest $request)
     {
         \DB::beginTransaction();
         try {
             if ($category->id == (int)$request->category_id) {
                 $this->result->create($request->all());
                 \DB::commit();//Commit to Data Base
-                return redirect()->route('admin.itest.result.index',[$category->id])
+                return redirect()->route('admin.itest.result.index',[$quiz->id, $category->id])
                     ->withSuccess(trans('core::core.messages.resource created', ['name' => trans('itest::results.title.results')]));
             } else {
                 throw new \Exception(trans('itest::common.messages.resource error'));
@@ -85,9 +84,9 @@ class ResultController extends AdminBaseController
      * @param  Result $result
      * @return Response
      */
-    public function edit($category, Result $result)
+    public function edit($quiz, $category, Result $result)
     {
-        return view('itest::admin.results.edit', compact('result','category'));
+        return view('itest::admin.results.edit', compact('result','category','quiz'));
     }
 
     /**
@@ -97,14 +96,14 @@ class ResultController extends AdminBaseController
      * @param  UpdateResultRequest $request
      * @return Response
      */
-    public function update($category, Result $result, UpdateResultRequest $request)
+    public function update($quiz, $category, Result $result, UpdateResultRequest $request)
     {
         \DB::beginTransaction();
         try {
             if ($category->id == (int)$request->category_id) {
                 $this->result->update($result, $request->all());
                 \DB::commit();//Commit to Data Base
-                return redirect()->route('admin.itest.result.index',[$category->id])
+                return redirect()->route('admin.itest.result.index',[$quiz->id,$category->id])
                     ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('itest::results.title.results')]));
             } else {
                 throw new \Exception(trans('itest::common.messages.resource error'));
@@ -125,13 +124,13 @@ class ResultController extends AdminBaseController
      * @param  Result $result
      * @return Response
      */
-    public function destroy($category, Result $result)
+    public function destroy($quiz, $category, Result $result)
     {
 
         try {
             $this->result->destroy($result);
 
-            return redirect()->route('admin.itest.result.index',[$category->id])
+            return redirect()->route('admin.itest.result.index',[$quiz->id,$category->id])
                 ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('itest::results.title.results')]));
         } catch (\Exception $e) {
             \Log::error($e);

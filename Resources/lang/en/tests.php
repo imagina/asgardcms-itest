@@ -19,7 +19,7 @@ return [
         'email'=>'E-Mail Notify'
     ],
     'messages' => [
-        'New test available'=>'New test available'
+        'New test available'=>'Nueva Prueba Realizada'
     ],
     'validation' => [
     ],

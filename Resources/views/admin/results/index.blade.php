@@ -15,7 +15,7 @@
         <div class="col-xs-12">
             <div class="row">
                 <div class="btn-group pull-right" style="margin: 0 15px 15px 0;">
-                    <a href="{{ route('admin.itest.result.create',[$category->id]) }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
+                    <a href="{{ route('admin.itest.result.create',[$quiz->id,$category->id]) }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
                         <i class="fa fa-pencil"></i> {{ trans('itest::results.button.create result') }}
                     </a>
                 </div>
@@ -43,17 +43,17 @@
                                     {{ $result->id}}
                                 </td>
                                 <td>
-                                    {{substr($result->description,5)}}
+                                    {!! $result->description!!}
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.itest.result.edit', [$category->id,$result->id]) }}">
+                                    <a href="{{ route('admin.itest.result.edit', [$quiz->id,$category->id,$result->id]) }}">
                                         {{ $result->created_at }}
                                     </a>
                                 </td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.itest.result.edit', [$category->id,$result->id]) }}" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.itest.result.destroy', [$category->id,$result->id]) }}"><i class="fa fa-trash"></i></button>
+                                        <a href="{{ route('admin.itest.result.edit', [$quiz->id,$category->id,$result->id]) }}" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
+                                        <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.itest.result.destroy', [$quiz->id,$category->id,$result->id]) }}"><i class="fa fa-trash"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -94,7 +94,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'c', route: "<?= route('admin.itest.result.create',[$category->id]) ?>" }
+                    { key: 'c', route: "<?= route('admin.itest.result.create',[$quiz->id,$category->id]) ?>" }
                 ]
             });
         });

@@ -24,7 +24,8 @@ return [
         'Categories'=> 'Categories',
         'created at'=>'Created at',
         'status'=>'Status',
-        'editor'=>'Editor'
+        'editor'=>'Editor',
+        'quiz'=> 'Quiz'
 
     ],
     'messages' => [

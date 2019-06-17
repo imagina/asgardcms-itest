@@ -32,6 +32,7 @@ class TestController extends AdminBaseController
     public function index()
     {
         $tests = $this->test->all();
+        $tests= $tests->group();
 
         return view('itest::admin.tests.index', compact(''));
     }

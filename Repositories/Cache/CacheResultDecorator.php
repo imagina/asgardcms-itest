@@ -60,10 +60,10 @@ class CacheResultDecorator extends BaseCacheDecorator implements ResultRepositor
      * @param $value
      * @return mixed
      */
-    public function whereValue($value)
+    public function whereValue($id,$value)
     {
-        return $this->remember(function () use ($value) {
-            return $this->repository->whereValue($value);
+        return $this->remember(function () use ($id,$value) {
+            return $this->repository->whereValue($id,$value);
         });
     }
 }

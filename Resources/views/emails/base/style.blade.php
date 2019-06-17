@@ -73,7 +73,7 @@
   }
   
   .contacto {
-    background-color: #009b54;
+    background-color: #C1A03B;
     color: #e2e2e2;
     padding: 15px;
   }

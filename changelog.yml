@@ -1,5 +1,13 @@
 url: https://github.com/imagina/asgardcms-itest
 versions:
+  "1.0.2":
+    added:
+      - Quiz Entity
+      - Migration modify for category an quietion tables
+      - Transtalte lang "es"
+    changed:
+      - Question and caregory Entity add quiz realtion
+      - SendTest Email
   "1.0.1":
     added:
       - Settings Email notify

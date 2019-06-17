@@ -5,12 +5,14 @@ namespace Modules\Itest\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Itest\Entities\Question;
+use Modules\Itest\Entities\Quiz;
 use Modules\Itest\Entities\Status;
 use Modules\Itest\Http\Requests\CreateQuestionRequest;
 use Modules\Itest\Http\Requests\UpdateQuestionRequest;
 use Modules\Itest\Repositories\CategoryRepository;
 use Modules\Itest\Repositories\QuestionRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
+use Modules\Itest\Repositories\QuizRepository;
 use Modules\User\Repositories\UserRepository;
 
 class QuestionController extends AdminBaseController
@@ -23,15 +25,16 @@ class QuestionController extends AdminBaseController
     private $category;
 
     private $status;
-
+    private $quiz;
     private $user;
 
-    public function __construct(QuestionRepository $question, CategoryRepository $category, Status $status, UserRepository $user)
+    public function __construct(QuestionRepository $question, CategoryRepository $category, Status $status, UserRepository $user, QuizRepository $quiz)
     {
         parent::__construct();
 
         $this->question = $question;
         $this->category=$category;
+        $this->quiz=$quiz;
         $this->status = $status;
         $this->user=$user;
     }
@@ -58,7 +61,8 @@ class QuestionController extends AdminBaseController
         $users= $this->user->all();
         $status = $this->status->lists();
         $categories = $this->category->all();
-        return view('itest::admin.questions.create',compact('users','categories','status'));
+        $quiz=$this->quiz->all();
+        return view('itest::admin.questions.create',compact('users','categories','status','quiz'));
     }
 
     /**
@@ -86,7 +90,8 @@ class QuestionController extends AdminBaseController
         $users= $this->user->all();
         $status = $this->status->lists();
         $categories = $this->category->all();
-        return view('itest::admin.questions.edit', compact('question','users','status','categories'));
+        $quiz=$this->quiz->all();
+        return view('itest::admin.questions.edit', compact('question','users','status','categories','quiz'));
     }
 
     /**

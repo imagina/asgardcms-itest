@@ -19,16 +19,18 @@ class SendTest extends Mailable
 
     public $subject;
     public $view;
+    public $quiz;
     public $result;
     public $user;
 
-    public function __construct($user, $result, $view, $subject)
+    public function __construct($user, $quiz, $result, $view, $subject)
     {
 
         $this->subject = $subject;
         $this->view = $view;
         $this->result = $result;
         $this->user=$user;
+        $this->quiz=$quiz;
     }
 
     /**

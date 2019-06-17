@@ -8,7 +8,7 @@ class Test extends Model
 {
 
     protected $table = 'itest__tests';
-    protected $fillable = ['question_id','email','key','category_id','value'];
+    protected $fillable = ['question_id','email','key','category_id','value', 'quiz_id'];
 
     public function question()
     {
@@ -19,4 +19,9 @@ class Test extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function quiz()
+    {
+        return $this->belongsTo(Quiz::class);
+    }
+
 }

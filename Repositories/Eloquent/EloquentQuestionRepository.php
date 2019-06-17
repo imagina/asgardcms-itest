@@ -4,6 +4,7 @@ namespace Modules\Itest\Repositories\Eloquent;
 
 use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 use Modules\Itest\Repositories\QuestionRepository;
+use Modules\Itest\Entities\Status;
 
 class EloquentQuestionRepository extends EloquentBaseRepository implements QuestionRepository
 {
@@ -16,6 +17,14 @@ class EloquentQuestionRepository extends EloquentBaseRepository implements Quest
             ->where('created_at', '<', date('Y-m-d H:i:s'))->orderBy('created_at', 'DESC')->paginate(12);
 
     }
+
+
+    public function whereQuiz($id)
+    {
+        return $this->model->where('quiz_id',$id)->whereStatus(Status::PUBLISHED)->orderBy('id', 'asc')->get();
+
+    }
+
 
     /**
      * @inheritdoc

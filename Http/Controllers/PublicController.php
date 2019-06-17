@@ -7,6 +7,8 @@ use Mockery\CountValidator\Exception;
 use Modules\Core\Http\Controllers\BasePublicController;
 use Modules\Itest\Emails\SendTest;
 use Modules\Itest\Repositories\CategoryRepository;
+use Modules\Itest\Repositories\QuestionRepository;
+use Modules\Itest\Repositories\QuizRepository;
 use Modules\Itest\Repositories\ResultRepository;
 use Modules\Itest\Repositories\TestRepository;
 use Illuminate\Http\Request;
@@ -23,9 +25,11 @@ class PublicController extends BasePublicController
     public $test;
 
     public $result;
+    public $question;
+    public $quiz;
     private $setting;
 
-    public function __construct(CategoryRepository $category, TestRepository $test, ResultRepository $result, Setting $setting)
+    public function __construct(CategoryRepository $category, TestRepository $test, ResultRepository $result, Setting $setting, QuizRepository $quiz,QuestionRepository $question)
     {
         parent::__construct();
 
@@ -33,49 +37,58 @@ class PublicController extends BasePublicController
         $this->test = $test;
         $this->result=$result;
         $this->setting = $setting;
+        $this->quiz=$quiz;
+        $this->question=$question;
 
     }
 
     public function index()
     {
-        $categories=$this->category->paginate(12);
+        $quizzes=$this->quiz->paginate(12);
 
-        return view('itest::frontend.index', compact('categories'));
+        return view('itest::frontend.index', compact('quizzes'));
 
     }
 
     public function show($slug)
     {
-        $category = $this->category->findBySlug($slug);
+        $quiz = $this->quiz->findBySlug($slug);
 
-        $questions=$category->questions;
-        return view('itest::frontend.show', compact('category','questions'));
+        $questions=$this->question->whereQuiz($quiz->id);
+        return view('itest::frontend.show', compact('quiz','questions'));
     }
 
     public function store($slug,Request $request)
     {
         $data=$request->all();
-        $category = $this->category->findBySlug($slug);
+        $quiz = $this->quiz->findBySlug($slug);
         $email=$data["email"];
         $key= str_random(40);
+        $result=array();
         unset($data['_token'],$data["email"]);
         foreach ($data as $index=> $test){
-            $test["category_id"]=$category->id;
+            $test["quiz_id"]=$quiz->id;
             $test["email"]=$email;
             $test['key']=$key;
             $this->test->create($test);
         }
-        $param=json_decode(json_encode(['filter'=>['category'=>$category->id,'email'=>$email,'key'=>$key],'include'=>[],'take'=>null]));
-        $tests=$this->test->getItemsBy($param);
-        $avg=$tests->avg('value');
-        $value=($avg*100)/5;
-        $result= $this->result->whereValue($value);
+        foreach ($quiz->categories as $i =>$category){
+            if(count($category->questions)){
+                $param=json_decode(json_encode(['filter'=>['category'=>$category->id,'email'=>$email,'key'=>$key],'include'=>[],'take'=>null]));
+                $tests=$this->test->getItemsBy($param);
+                $avg=$tests->avg('value');
+                $value=($avg*100)/5;
+                $result[$i]=(object)["category"=>$category->title,"result"=>$this->result->whereValue($category->id,$value)];
+            }
+
+
+        }
         $subject = trans("itest::tests.messages.New test available"). ' - '.$this->setting->get('core::site-name');
         $view = "itest::emails.test.new";
         $notify = "itest::emails.test.notify-test";
-        Mail::to($email)->send(new SendTest($email,$result,$view,$subject));
-        Mail::to($this->setting->get('itest::notify-email'))->send(new SendTest($email,$result,$notify,$subject));
-        return redirect()->route('itest.answer',[$category->slug])
+        Mail::to($email)->send(new SendTest($email,$quiz,$result,$view,$subject));
+        Mail::to($this->setting->get('itest::notify-email'))->send(new SendTest($email,$quiz,$result,$notify,$subject));
+        return redirect()->route('itest.answer',[$quiz->slug])
             ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('itest::results.title.results')]));
 
     }

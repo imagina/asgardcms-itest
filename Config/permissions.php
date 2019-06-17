@@ -25,7 +25,16 @@ return [
         'edit' => 'itest::tests.edit resource',
         'destroy' => 'itest::tests.destroy resource',
     ],
+
+    'itest.quizzes' => [
+        'index' => 'itest::quizzes.list resource',
+        'create' => 'itest::quizzes.create resource',
+        'edit' => 'itest::quizzes.edit resource',
+        'destroy' => 'itest::quizzes.destroy resource',
+    ],
 // append
+
+
 
 
 

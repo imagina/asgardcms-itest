@@ -6,13 +6,13 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li><a href="{{ route('admin.itest.category.index') }}">{{ trans('itest::categories.title.categories') }}</a></li>
+        <li><a href="{{ route('admin.itest.category.index',[$quiz->id]) }}">{{ trans('itest::categories.title.categories') }}</a></li>
         <li class="active">{{ trans('itest::categories.title.edit category') }}</li>
     </ol>
 @stop
 
 @section('content')
-    {!! Form::open(['route' => ['admin.itest.category.update', $category->id], 'method' => 'put']) !!}
+    {!! Form::open(['route' => ['admin.itest.category.update',$quiz->id, $category->id], 'method' => 'put']) !!}
     <div class="row">
         <div class="col-xs-12 col-md-9">
             <div class="row">
@@ -62,7 +62,7 @@
                                 <button type="submit"
                                         class="btn btn-primary btn-flat">{{ trans('core::core.button.update') }}</button>
                                 <a class="btn btn-danger pull-right btn-flat"
-                                   href="{{ route('admin.itest.category.index')}}">
+                                   href="{{ route('admin.itest.category.index',[$quiz->id])}}">
                                     <i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
                             </div>
                         </div>
@@ -72,6 +72,27 @@
         </div>
         <div class="col-xs-12 col-md-3">
             <div class="row">
+                <div class="col-xs-12 ">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label>{{trans('itest::categories.form.quiz')}}</label>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class='form-group{{ $errors->has("value") ? ' has-error' : '' }}'>
+                                <input type="text" class="form-control" value="{{$category->quiz->title}}"
+                                       disabled>
+                                <input type="hidden" name="category_id" class="form-control" value="{{$category->quiz->id}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-xs-12 ">
                     <div class="box box-primary">
                         <div class="box-header">
@@ -137,7 +158,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'b', route: "<?= route('admin.itest.category.index') ?>" }
+                    { key: 'b', route: "<?= route('admin.itest.category.index',[$quiz->id,]) ?>" }
                 ]
             });
         });

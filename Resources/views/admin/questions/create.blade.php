@@ -2,12 +2,12 @@
 
 @section('content-header')
     <h1>
-        {{ trans('itest::questionss.title.create question') }}
+        {{ trans('itest::questions.title.create question') }}
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li><a href="{{ route('admin.itest.question.index') }}">{{ trans('itest::questionss.title.questions') }}</a></li>
-        <li class="active">{{ trans('itest::questionss.title.create question') }}</li>
+        <li><a href="{{ route('admin.itest.question.index') }}">{{ trans('itest::questions.title.questions') }}</a></li>
+        <li class="active">{{ trans('itest::questions.title.create question') }}</li>
     </ol>
 @stop
 
@@ -71,6 +71,28 @@
         </div>
         <div class="col-xs-12 col-md-3">
             <div class="row">
+                <div class="col-xs-12 ">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label>{{trans('itest::questions.form.quiz')}}</label>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <select class="form-control" name="quiz_id" id="quiz_id">
+                                @foreach ($quiz as $item)
+                                    <option value="{{$item->id}}" {{ old('category_id', 0) == $item->id ? 'selected' : '' }}> {{$item->title}}
+                                    </option>
+                                @endforeach
+                            </select><br>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-xs-12 ">
                     <div class="box box-primary">
                         <div class="box-header">

@@ -15,7 +15,7 @@
         <div class="col-xs-12">
             <div class="row">
                 <div class="btn-group pull-right" style="margin: 0 15px 15px 0;">
-                    <a href="{{ route('admin.itest.category.create') }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
+                    <a href="{{ route('admin.itest.category.create',[$quiz->id]) }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
                         <i class="fa fa-pencil"></i> {{ trans('itest::categories.button.create category') }}
                     </a>
                 </div>
@@ -42,37 +42,37 @@
                            @foreach ($categories as $category)
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.itest.category.edit', [$category->id]) }}">
+                                    <a href="{{ route('admin.itest.category.edit', [$quiz->id,$category->id]) }}">
                                         {{ $category->id }}
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.itest.category.edit', [$category->id]) }}">
+                                    <a href="{{ route('admin.itest.category.edit', [$quiz->id,$category->id]) }}">
                                         {{ $category->title }}
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.itest.category.edit', [$category->id]) }}">
+                                    <a href="{{ route('admin.itest.category.edit', [$quiz->id,$category->id]) }}">
                                         {{ $category->slug }}
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{  route('admin.itest.category.edit', [$category->id]) }}">
+                                    <a href="{{  route('admin.itest.category.edit', [$quiz->id,$category->id]) }}">
                                             <span class="label {{ $category->present()->statusLabelClass}}">
                                             {{ $category->present()->status}}
                                     </span>
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.itest.category.edit', [$category->id]) }}">
+                                    <a href="{{ route('admin.itest.category.edit', [$quiz->id,$category->id]) }}">
                                         {{ $category->created_at }}
                                     </a>
                                 </td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.itest.category.edit', [$category->id]) }}" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
-                                        <a href="{{ route('admin.itest.result.index', [$category->id]) }}" class="btn btn-success btn-flat"><i class="fa fa-list-ol"></i></a>
-                                        <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.itest.category.destroy', [$category->id]) }}"><i class="fa fa-trash"></i></button>
+                                        <a href="{{ route('admin.itest.category.edit', [$quiz->id,$category->id]) }}" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ route('admin.itest.result.index', [$quiz->id,$category->id]) }}" class="btn btn-success btn-flat"><i class="fa fa-list-ol"></i></a>
+                                        <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.itest.category.destroy', [$quiz->id,$category->id]) }}"><i class="fa fa-trash"></i></button>
                                     </div>
                                 </td>
 
@@ -116,7 +116,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'c', route: "<?= route('admin.itest.category.create') ?>" }
+                    { key: 'c', route: "<?= route('admin.itest.category.create',[$quiz->id]) ?>" }
 
                 ]
             });

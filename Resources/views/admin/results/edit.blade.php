@@ -6,13 +6,13 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li><a href="{{ route('admin.itest.result.index',[$category->id]) }}">{{ trans('itest::results.title.results') }}</a></li>
+        <li><a href="{{ route('admin.itest.result.index',[$quiz->id,$category->id]) }}">{{ trans('itest::results.title.results') }}</a></li>
         <li class="active">{{ trans('itest::results.title.edit result') }}</li>
     </ol>
 @stop
 
 @section('content')
-    {!! Form::open(['route' => ['admin.itest.result.update', $category->id,$result->id], 'method' => 'put']) !!}
+    {!! Form::open(['route' => ['admin.itest.result.update', $quiz->id,$category->id,$result->id], 'method' => 'put']) !!}
     <div class="row">
         <div class="col-xs-12 col-md-9">
             <div class="row">
@@ -62,7 +62,7 @@
                                 <button type="submit"
                                         class="btn btn-primary btn-flat">{{ trans('core::core.button.update') }}</button>
                                 <a class="btn btn-danger pull-right btn-flat"
-                                   href="{{ route('admin.itest.category.index',[$category->id])}}">
+                                   href="{{ route('admin.itest.category.index',[$quiz->id,$category->id])}}">
                                     <i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                         </div>
                         <div class="box-body ">
                             <div class='form-group{{ $errors->has("value") ? ' has-error' : '' }}'>
-                                {!! Form::text("value", old("value", $result->value), ['class' => 'form-control', 'data-slug' => 'source', 'placeholder' => trans('itest::result.form.title')]) !!}
+                                {!! Form::text("value", old("value", (int)$result->value), ['class' => 'form-control', 'data-slug' => 'source', 'placeholder' => trans('itest::result.form.title')]) !!}
                                 {!! $errors->first("value", '<span class="help-block">:message</span>') !!}
 
                             </div>
@@ -135,7 +135,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'b', route: "<?= route('admin.itest.result.index',[$category->id]) ?>" }
+                    { key: 'b', route: "<?= route('admin.itest.result.index',[$quiz->id,$category->id]) ?>" }
                 ]
             });
         });

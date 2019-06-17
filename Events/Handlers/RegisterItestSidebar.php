@@ -43,15 +43,6 @@ class RegisterItestSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                 $item->authorize(
                      /* append */
                 );
-                $item->item(trans('itest::categories.title.categories'), function (Item $item) {
-                    $item->icon('fa fa-file-text');
-                    $item->weight(0);
-                    $item->append('admin.itest.category.create');
-                    $item->route('admin.itest.category.index');
-                    $item->authorize(
-                        $this->auth->hasAccess('itest.categories.index')
-                    );
-                });
                 $item->item(trans('itest::questions.title.questions'), function (Item $item) {
                     $item->icon('fa fa-question');
                     $item->weight(0);
@@ -61,16 +52,19 @@ class RegisterItestSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('itest.questions.index')
                     );
                 });
-                /*$item->item(trans('itest::results.title.results'), function (Item $item) {
-                    $item->icon('fa fa-list-ol');
+            
+                $item->item(trans('itest::quizzes.title.quizzes'), function (Item $item) {
+                    $item->icon('fa fa-copy');
                     $item->weight(0);
-                    $item->append('admin.itest.result.create');
-                    $item->route('admin.itest.result.index');
+                    $item->append('admin.itest.quiz.create');
+                    $item->route('admin.itest.quiz.index');
                     $item->authorize(
-                        $this->auth->hasAccess('itest.results.index')
+                        $this->auth->hasAccess('itest.quizzes.index')
                     );
-                });*/
+                });
 // append
+
+
 
 
 

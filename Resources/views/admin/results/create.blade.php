@@ -8,14 +8,14 @@
         <li><a href="{{ route('dashboard.index') }}"><i
                         class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
         <li>
-            <a href="{{ route('admin.itest.result.index',[$category->id]) }}">{{ trans('itest::results.title.results') }}</a>
+            <a href="{{ route('admin.itest.result.index',[$quiz->id,$category->id]) }}">{{ trans('itest::results.title.results') }}</a>
         </li>
         <li class="active">{{ trans('itest::results.title.create result') }}</li>
     </ol>
 @stop
 
 @section('content')
-    {!! Form::open(['route' => ['admin.itest.result.store',$category->id], 'method' => 'post']) !!}
+    {!! Form::open(['route' => ['admin.itest.result.store',$quiz->id,$category->id], 'method' => 'post']) !!}
     <div class="row">
         <div class="col-xs-12 col-md-9">
             <div class="row">
@@ -64,7 +64,7 @@
                                 <button type="submit"
                                         class="btn btn-primary btn-flat">{{ trans('core::core.button.create') }}</button>
                                 <a class="btn btn-danger pull-right btn-flat"
-                                   href="{{ route('admin.itest.result.index',[$category->id])}}"><i
+                                   href="{{ route('admin.itest.result.index',[$quiz->id,$category->id])}}"><i
                                             class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
                             </div>
                         </div>
@@ -137,7 +137,7 @@
         $(document).ready(function () {
             $(document).keypressAction({
                 actions: [
-                    {key: 'b', route: "<?= route('admin.itest.result.index', [$category->id]) ?>"}
+                    {key: 'b', route: "<?= route('admin.itest.result.index', [$quiz->id,$category->id]) ?>"}
                 ]
             });
         });

@@ -28,7 +28,8 @@ return [
         'metadata'=> 'Meta Data',
         'meta_title'=>'Meta Title',
         'meta_keywords'=>'Meta Keywords',
-        'meta_description'=>'Meta Description'
+        'meta_description'=>'Meta Description',
+        'quiz'=> 'Quiz'
     ],
     'messages' => [
     ],

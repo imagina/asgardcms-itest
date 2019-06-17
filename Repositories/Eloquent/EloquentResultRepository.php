@@ -112,9 +112,9 @@ class EloquentResultRepository extends EloquentBaseRepository implements ResultR
 
     }
 
-    public function whereValue($value){
-        $query=$this->model->where('value','<=',$value)->orderBy('value','desc')->first();
+    public function whereValue($id,$value){
 
+        $query=$this->model->where('category_id',$id)->where('value','>=',(int)$value)->orderBy('value','asc')->first();
         return $query;
 
     }

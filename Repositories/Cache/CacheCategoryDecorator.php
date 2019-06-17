@@ -13,4 +13,11 @@ class CacheCategoryDecorator extends BaseCacheDecorator implements CategoryRepos
         $this->entityName = 'itest.categories';
         $this->repository = $category;
     }
+
+    public function whereQuiz($id)
+    {
+        return $this->remember(function () use ($id) {
+            return $this->repository->whereQuiz($id);
+        });
+    }
 }

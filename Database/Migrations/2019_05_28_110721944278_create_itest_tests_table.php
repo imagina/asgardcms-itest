@@ -17,6 +17,7 @@ class CreateItestTestsTable extends Migration
             $table->increments('id');
             $table->integer('question_id')->unsigned();
             $table->integer('category_id')->unsigned();
+            $table->integer('quiz_id')->unsigned();
             $table->string('email');
             $table->string('key');
             $table->integer('value')->unsigned();
